@@ -16,6 +16,11 @@
   with_items:
     - "{{data_dirs}}"
 
+#Copy the cert file
+- name: Copy ssl cert file
+  become: yes
+  copy: src=certs dest={{conf_dir}} mode=0644 force=yes
+  notify: restart elasticsearch
 
 #Copy the config template
 - name: Copy Configuration File
