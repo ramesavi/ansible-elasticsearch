@@ -37,9 +37,13 @@
 ################################################################
 
 ## GC configuration
--XX:+UseConcMarkSweepGC
--XX:CMSInitiatingOccupancyFraction=75
--XX:+UseCMSInitiatingOccupancyOnly
+#-XX:+UseConcMarkSweepGC
+#-XX:CMSInitiatingOccupancyFraction=75
+#-XX:+UseCMSInitiatingOccupancyOnly
+
+-XX:+UseG1GC 
+-XX:+UseStringDeduplication
+-XX:MaxGCPauseMillis=500
 
 ## optimizations
 
@@ -85,24 +89,24 @@
 
 ## GC logging
 
-#-XX:+PrintGCDetails
-#-XX:+PrintGCTimeStamps
-#-XX:+PrintGCDateStamps
-#-XX:+PrintClassHistogram
-#-XX:+PrintTenuringDistribution
-#-XX:+PrintGCApplicationStoppedTime
+-XX:+PrintGCDetails
+-XX:+PrintGCTimeStamps
+-XX:+PrintGCDateStamps
+-XX:+PrintClassHistogram
+-XX:+PrintTenuringDistribution
+-XX:+PrintGCApplicationStoppedTime
 
 # log GC status to a file with time stamps
 # ensure the directory exists
-#-Xloggc:${loggc}
+-Xloggc:{{ log_dir }}/gc.log
 
 
 # By default, the GC log file will not rotate.
 # By uncommenting the lines below, the GC log file
 # will be rotated every 128MB at most 32 times.
-#-XX:+UseGCLogFileRotation
-#-XX:NumberOfGCLogFiles=32
-#-XX:GCLogFileSize=128M
+-XX:+UseGCLogFileRotation
+-XX:NumberOfGCLogFiles=32
+-XX:GCLogFileSize=128M
 
 # Elasticsearch 5.0.0 will throw an exception on unquoted field names in JSON.
 # If documents were already indexed with unquoted fields in a previous version
